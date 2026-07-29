@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission confidentielle</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="scanlines" aria-hidden="true"></div>
+
+    <main id="app">
+        <section id="introScreen" class="screen terminal-screen active">
+            <div class="terminal-header">SERVEUR PRIVÉ - NIVEAU 67</div>
+            <div id="introText" class="terminal-text cursor"></div>
+
+            <div id="loadingContainer" class="loading-container hidden">
+                <div class="loading-label">ANALYSE EN COURS...</div>
+                <div class="loading-bar">
+                    <div id="loadingProgress" class="loading-progress"></div>
+                </div>
+                <div id="loadingPercent" class="loading-percent">0%</div>
+            </div>
+
+            <div id="missionChoice" class="mission-choice hidden">
+                <p>Deux options sont disponibles.</p>
+                <button id="acceptMissionButton" type="button">&gt; EXTRAIRE LA VIDEO</button>
+                <button id="abandonMissionButton" class="danger-button" type="button">&gt; FERMER ET NE JAMAIS SAVOIR</button>
+            </div>
+        </section>
+
+        <section id="abandonScreen" class="screen terminal-screen">
+            <div class="terminal-header">CONNEXION TERMINÉE</div>
+            <div class="terminal-text">
+MISSION ANNULÉE.
+
+Aucune video n'a été extrait.
+
+Vous pouvez maintenant fermer cet onglet.
+            </div>
+        </section>
+
+        <section id="memoryScreen" class="screen challenge-screen">
+            <div class="challenge-header">
+                <span>ÉPREUVE 1/4</span>
+                <span>TEST MEMOIRE</span>
+            </div>
+
+            <h1>Reconstitue la chronologie</h1>
+            <p class="challenge-description">
+                Sélectionne les cinq souvenirs dans l'ordre où ils se sont produits.
+            </p>
+
+            <div class="selected-order-box">
+                <p class="small-label">ORDRE SÉLECTIONNÉ</p>
+                <ol id="selectedMemories"></ol>
+                <p id="emptySelectionMessage" class="empty-message">Aucun souvenir sélectionné.</p>
+            </div>
+
+            <div id="memoryCards" class="memory-cards"></div>
+
+            <div class="button-row">
+                <button id="resetMemoriesButton" type="button">&gt; RECOMMENCER</button>
+                <button id="verifyMemoriesButton" type="button">&gt; VÉRIFIER L'ORDRE</button>
+            </div>
+
+            <p id="memoryFeedback" class="feedback" aria-live="polite"></p>
+        </section>
+
+        <section id="transitionScreen" class="screen terminal-screen">
+            <div class="terminal-header">PROTOCOLE DE TRANSITION</div>
+            <div id="transitionText" class="terminal-text cursor"></div>
+        </section>
+
+        <section id="candyScreen" class="screen challenge-screen">
+            <div class="challenge-header">
+                <span>ÉPREUVE 2/4</span>
+                <span>GARDENSCAPE</span>
+            </div>
+
+            <h1>Rétablis le système</h1>
+            <p class="challenge-description">
+                Mets tes compétes Gardenscape à l'épreuve dans ce mini-jeu.
+                Appuie sur un bonbon, puis sur un bonbon voisin pour les échanger.
+                Crée cinq combinaisons d'au moins trois symboles identiques.
+            </p>
+
+            <div class="candy-status">
+                <span>COMBINAISONS : <strong id="candyScore">0</strong>/5</span>
+                <span>MOUVEMENTS : <strong id="candyMoves">0</strong></span>
+            </div>
+
+            <div id="candyGrid" class="candy-grid" aria-label="Grille de bonbons"></div>
+            <p id="candyMessage" class="candy-message" aria-live="polite">Sélectionne un premier bonbon.</p>
+        </section>
+
+        <section id="timerScreen" class="screen challenge-screen">
+            <div class="challenge-header">
+                <span>ÉPREUVE 3/4</span>
+                <span>SYNCHRONISATION 20</span>
+            </div>
+
+            <h1>Synchronise ton instinct</h1>
+            <p class="challenge-description">
+                Pour tes 20 ans, le système exige une précision parfaite.
+                Lance le chronomètre invisible, puis arrête-le entre 20 et 21 secondes.
+            </p>
+            <p class="challenge-description">
+                Aucun temps ne sera affiché pendant l'épreuve. Fais confiance à ton intuition.
+            </p>
+
+            <div class="timer-panel">
+                <p class="small-label">CHRONOMÈTRE INVISIBLE</p>
+                <div id="timerPulse" class="timer-pulse" aria-hidden="true">20</div>
+                <p id="timerStatus" class="timer-status" aria-live="polite">Prête pour la synchronisation.</p>
+            </div>
+
+            <div class="button-row">
+                <button id="startTimerButton" type="button">&gt; LANCER</button>
+                <button id="stopTimerButton" type="button" disabled>&gt; ARRÊTER</button>
+            </div>
+
+            <button id="resetTimerButton" class="secondary-button hidden" type="button">&gt; RÉESSAYER</button>
+            <p id="timerFeedback" class="feedback" aria-live="polite"></p>
+        </section>
+
+        <section id="codeScreen" class="screen challenge-screen">
+            <div class="challenge-header">
+                <span>ÉPREUVE 4/4</span>
+                <span>CODE FINAL</span>
+            </div>
+
+            <h1>Déchiffre le code</h1>
+            <p class="challenge-description">
+                Au cours des derniers mois, 3 lettres t'ont été transmises.
+                Treize chiffres entiers y ont été discrètement dissimulés.
+            </p>
+            <p class="challenge-description">
+                Rassemble-les et entre le code final.
+            </p>
+
+            <input
+                id="secretCodeInput"
+                class="secret-code-input"
+                type="tel"
+                inputmode="numeric"
+                maxlength="13"
+                autocomplete="off"
+                placeholder="•••••••••••••"
+                aria-label="Code secret de treize chiffres"
+            >
+
+            <p id="codeCounter" class="code-counter">0/13 chiffres</p>
+            <button id="verifyCodeButton" type="button">&gt; RECHERCHE DE LA VIDEO</button>
+            <p id="codeFeedback" class="feedback" aria-live="polite"></p>
+        </section>
+
+        <section id="finalLoadingScreen" class="screen terminal-screen">
+            <div class="terminal-header">DOSSIER FINAL</div>
+            <div id="finalLoadingText" class="terminal-text cursor"></div>
+
+            <div id="finalProgressContainer" class="loading-container hidden">
+                <div class="loading-label">DÉCHIFFREMENT DE L'ALBUM PHOTO...</div>
+                <div class="loading-bar">
+                    <div id="finalProgress" class="loading-progress"></div>
+                </div>
+                <div id="finalPercent" class="loading-percent">0%</div>
+            </div>
+        </section>
+
+        <section id="videoScreen" class="screen birthday-screen">
+            <div class="birthday-content">
+                <p class="birthday-small-title">VIDEO EXTRAITE MWHAHAHAHA</p>
+                <h1>Joyeux anniversaire</h1>
+                <p>Je suis le npc qui a parlé d'amitié en premier donc je me dois d'être le premier
+                    à me metter en avant. 
+                </p>
+                <p>Comme je t'ai dit, je suis capable de grandes choses pour te faire sourire</p>
+
+                <div class="video-container">
+                    <video id="birthdayVideo" controls playsinline preload="metadata">
+                        <source src="video/anniversaire.mov" type="video/quicktime">
+                        <source src="video/anniversaire.mp4" type="video/mp4">
+                        Ton navigateur ne peut pas lire cette vidéo.
+                    </video>
+                </div>
+                <p id="videoFallback" class="video-fallback hidden">
+                    La lecture automatique a été bloquée.
+                    <a href="video/anniversaire.mov">Ouvrir la vidéo</a>
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

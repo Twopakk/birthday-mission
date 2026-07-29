@@ -1,0 +1,640 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --green: #00ff66;
+    --green-soft: rgba(0, 255, 102, 0.12);
+    --red: #ff405c;
+    --black: #000000;
+    --white: #ffffff;
+    --rose: #f05d7b;
+    --gold: #f5c35b;
+    --ink: #171421;
+}
+
+html {
+    min-height: 100%;
+    background: var(--black);
+}
+
+body {
+    min-height: 100vh;
+    overflow-x: hidden;
+    background: var(--black);
+    color: var(--green);
+    font-family: "Courier New", Courier, monospace;
+}
+
+button,
+input {
+    font-family: inherit;
+}
+
+button {
+    width: 100%;
+    min-height: 52px;
+    padding: 14px 16px;
+    border: 1px solid var(--green);
+    border-radius: 6px;
+    background: transparent;
+    color: var(--green);
+    cursor: pointer;
+    font-size: 0.92rem;
+    font-weight: 700;
+    line-height: 1.25;
+    box-shadow: 0 0 8px rgba(0, 255, 102, 0.22), inset 0 0 8px rgba(0, 255, 102, 0.07);
+    touch-action: manipulation;
+    transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease, border-color 0.2s ease;
+}
+
+button:active {
+    background: var(--green);
+    color: var(--black);
+    transform: scale(0.98);
+}
+
+button:disabled {
+    cursor: default;
+    opacity: 0.45;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.screen {
+    display: none;
+    width: 100%;
+    max-width: 720px;
+    min-height: 100svh;
+    margin: 0 auto;
+    padding: 24px 18px 40px;
+}
+
+.screen.active {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    animation: screenAppear 0.45s ease;
+}
+
+@keyframes screenAppear {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.terminal-screen {
+    position: relative;
+    z-index: 2;
+}
+
+.terminal-header {
+    margin-bottom: 30px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--green);
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    line-height: 1.4;
+    opacity: 0.82;
+}
+
+.terminal-text {
+    min-height: 300px;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    white-space: pre-line;
+    text-shadow: 0 0 5px var(--green), 0 0 10px rgba(0, 255, 102, 0.3);
+}
+
+.cursor::after {
+    content: "█";
+    margin-left: 4px;
+    animation: blink 0.8s infinite;
+}
+
+@keyframes blink {
+    0%,
+    45% {
+        opacity: 1;
+    }
+
+    46%,
+    100% {
+        opacity: 0;
+    }
+}
+
+.loading-container {
+    margin-top: 24px;
+}
+
+.loading-label {
+    margin-bottom: 10px;
+    font-size: 0.78rem;
+    letter-spacing: 1px;
+}
+
+.loading-bar {
+    width: 100%;
+    height: 18px;
+    border: 1px solid var(--green);
+    background: rgba(0, 255, 102, 0.04);
+    box-shadow: 0 0 8px rgba(0, 255, 102, 0.25), inset 0 0 8px rgba(0, 255, 102, 0.12);
+}
+
+.loading-progress {
+    width: 0%;
+    height: 100%;
+    background: var(--green);
+    box-shadow: 0 0 10px var(--green), 0 0 20px rgba(0, 255, 102, 0.55);
+    transition: width 0.15s linear;
+}
+
+.loading-percent {
+    margin-top: 7px;
+    text-align: right;
+    font-size: 0.8rem;
+}
+
+.mission-choice {
+    margin-top: 26px;
+}
+
+.mission-choice p {
+    margin-bottom: 18px;
+    line-height: 1.6;
+}
+
+.mission-choice button + button {
+    margin-top: 12px;
+}
+
+.danger-button {
+    border-color: var(--red);
+    color: var(--red);
+    box-shadow: 0 0 8px rgba(255, 64, 92, 0.2), inset 0 0 8px rgba(255, 64, 92, 0.06);
+}
+
+.danger-button:active {
+    background: var(--red);
+    color: var(--black);
+}
+
+.challenge-screen {
+    position: relative;
+    z-index: 2;
+    justify-content: flex-start !important;
+    padding-top: 26px;
+}
+
+.challenge-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 32px;
+    padding-bottom: 11px;
+    border-bottom: 1px solid var(--green);
+    font-size: 0.7rem;
+    letter-spacing: 1.4px;
+    line-height: 1.35;
+    opacity: 0.82;
+}
+
+.challenge-screen h1 {
+    margin-bottom: 15px;
+    font-size: clamp(1.65rem, 7vw, 2.4rem);
+    line-height: 1.12;
+}
+
+.challenge-description {
+    margin-bottom: 18px;
+    font-size: 0.96rem;
+    line-height: 1.55;
+}
+
+.small-label {
+    margin-bottom: 10px;
+    font-size: 0.72rem;
+    letter-spacing: 1.5px;
+    opacity: 0.75;
+}
+
+.feedback {
+    min-height: 28px;
+    margin-top: 18px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    line-height: 1.45;
+}
+
+.feedback.correct {
+    color: var(--green);
+}
+
+.feedback.incorrect {
+    color: var(--red);
+    text-shadow: 0 0 7px rgba(255, 64, 92, 0.45);
+}
+
+.selected-order-box {
+    min-height: 130px;
+    margin: 10px 0 20px;
+    padding: 15px;
+    border: 1px solid rgba(0, 255, 102, 0.45);
+    border-radius: 7px;
+    background: var(--green-soft);
+}
+
+.selected-order-box ol {
+    padding-left: 25px;
+    line-height: 1.75;
+}
+
+.empty-message {
+    font-size: 0.86rem;
+    opacity: 0.55;
+}
+
+.memory-cards {
+    display: grid;
+    gap: 10px;
+}
+
+.memory-card {
+    margin: 0;
+    text-align: left;
+}
+
+.memory-card.selected {
+    border-color: rgba(0, 255, 102, 0.3);
+    opacity: 0.35;
+}
+
+.button-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.candy-status {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 6px 0 16px;
+    padding: 11px 12px;
+    border: 1px solid var(--green);
+    border-radius: 6px;
+    background: var(--green-soft);
+    font-size: 0.76rem;
+    line-height: 1.35;
+}
+
+.candy-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 6px;
+    width: 100%;
+    max-width: 430px;
+    margin: 0 auto;
+    padding: 7px;
+    border: 1px solid var(--green);
+    border-radius: 9px;
+    background: rgba(0, 255, 102, 0.04);
+    box-shadow: 0 0 12px rgba(0, 255, 102, 0.18), inset 0 0 12px rgba(0, 255, 102, 0.07);
+}
+
+.candy-cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1 / 1;
+    min-height: 0;
+    padding: 0;
+    border: 1px solid rgba(0, 255, 102, 0.32);
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.8);
+    font-size: clamp(1.45rem, 7vw, 2.35rem);
+    line-height: 1;
+    transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+}
+
+.candy-cell.selected {
+    background: rgba(0, 255, 102, 0.22);
+    box-shadow: 0 0 12px var(--green), inset 0 0 8px rgba(0, 255, 102, 0.2);
+    transform: scale(1.05);
+}
+
+.candy-cell.matched {
+    animation: candyDisappear 0.35s ease forwards;
+}
+
+@keyframes candyDisappear {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.22) rotate(7deg);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(0);
+    }
+}
+
+.candy-message {
+    min-height: 25px;
+    margin-top: 14px;
+    text-align: center;
+    font-size: 0.86rem;
+    font-weight: 700;
+    line-height: 1.45;
+}
+
+.timer-panel {
+    margin: 14px 0 20px;
+    padding: 18px;
+    border: 1px solid rgba(0, 255, 102, 0.45);
+    border-radius: 7px;
+    background: var(--green-soft);
+    text-align: center;
+}
+
+.timer-pulse {
+    display: grid;
+    place-items: center;
+    width: min(52vw, 210px);
+    aspect-ratio: 1 / 1;
+    margin: 18px auto;
+    border: 1px solid var(--green);
+    border-radius: 50%;
+    color: var(--green);
+    font-size: clamp(3.4rem, 18vw, 6rem);
+    font-weight: 700;
+    line-height: 1;
+    text-shadow: 0 0 12px var(--green), 0 0 26px rgba(0, 255, 102, 0.35);
+    box-shadow: 0 0 20px rgba(0, 255, 102, 0.24), inset 0 0 28px rgba(0, 255, 102, 0.08);
+}
+
+.timer-pulse.running {
+    animation: timerPulse 1.3s ease-in-out infinite;
+}
+
+.timer-pulse.success {
+    background: var(--green);
+    color: var(--black);
+    text-shadow: none;
+}
+
+.timer-status {
+    min-height: 24px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    line-height: 1.45;
+}
+
+.secondary-button {
+    margin-top: 10px;
+}
+
+@keyframes timerPulse {
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 0.78;
+    }
+
+    50% {
+        transform: scale(1.04);
+        opacity: 1;
+    }
+}
+
+.secret-code-input {
+    width: 100%;
+    margin-top: 12px;
+    padding: 18px 12px;
+    border: 1px solid var(--green);
+    border-radius: 7px;
+    outline: none;
+    background: rgba(0, 255, 102, 0.04);
+    color: var(--green);
+    text-align: center;
+    font-size: clamp(1.25rem, 6vw, 2rem);
+    letter-spacing: 5px;
+    box-shadow: 0 0 10px rgba(0, 255, 102, 0.18), inset 0 0 10px rgba(0, 255, 102, 0.07);
+}
+
+.secret-code-input::placeholder {
+    color: rgba(0, 255, 102, 0.35);
+}
+
+.secret-code-input:focus {
+    box-shadow: 0 0 16px rgba(0, 255, 102, 0.45), inset 0 0 10px rgba(0, 255, 102, 0.1);
+}
+
+.code-counter {
+    margin: 8px 0 18px;
+    text-align: right;
+    font-size: 0.75rem;
+    opacity: 0.7;
+}
+
+.birthday-screen {
+    max-width: none;
+    color: var(--ink);
+    background:
+        radial-gradient(circle at 18% 12%, rgba(245, 195, 91, 0.34), transparent 24rem),
+        radial-gradient(circle at 85% 0%, rgba(240, 93, 123, 0.32), transparent 22rem),
+        linear-gradient(145deg, #fff8fb 0%, #f8e8ef 40%, #dde9ff 100%);
+}
+
+.birthday-content {
+    width: 100%;
+    max-width: 760px;
+    margin: auto;
+    text-align: center;
+    animation: birthdayReveal 1s ease;
+}
+
+.birthday-small-title {
+    margin-bottom: 18px;
+    color: #7b3750;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    opacity: 0.85;
+}
+
+.birthday-content h1 {
+    margin-bottom: 20px;
+    color: #27182f;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(2.5rem, 11vw, 4.8rem);
+    font-weight: 700;
+    line-height: 1;
+}
+
+.birthday-content p {
+    margin-bottom: 10px;
+    color: #44384f;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.video-container {
+    width: 100%;
+    margin-top: 30px;
+    overflow: hidden;
+    border: 1px solid rgba(39, 24, 47, 0.15);
+    border-radius: 12px;
+    background: #000000;
+    box-shadow: 0 20px 60px rgba(55, 32, 64, 0.28), 0 0 0 6px rgba(255, 255, 255, 0.5);
+}
+
+video {
+    display: block;
+    width: 100%;
+    max-height: 72svh;
+    background: #000000;
+}
+
+.video-fallback {
+    margin-top: 16px;
+    color: #5d415f;
+}
+
+.video-fallback a {
+    color: #7b3750;
+    font-weight: 700;
+}
+
+@keyframes birthdayReveal {
+    from {
+        opacity: 0;
+        transform: translateY(25px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.scanlines {
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.025) 0,
+        rgba(255, 255, 255, 0.025) 1px,
+        transparent 1px,
+        transparent 4px
+    );
+    opacity: 0.35;
+}
+
+body.birthday-mode .scanlines {
+    display: none;
+}
+
+.glitch {
+    animation: glitchShake 0.42s linear;
+}
+
+@keyframes glitchShake {
+    0% {
+        transform: translate(0);
+    }
+
+    20% {
+        transform: translate(-4px, 2px);
+    }
+
+    40% {
+        transform: translate(4px, -2px);
+    }
+
+    60% {
+        transform: translate(-3px, 1px);
+    }
+
+    80% {
+        transform: translate(3px, -1px);
+    }
+
+    100% {
+        transform: translate(0);
+    }
+}
+
+.glitch-flash {
+    animation: glitchFlash 0.3s linear;
+}
+
+@keyframes glitchFlash {
+    0% {
+        background: #000000;
+        filter: none;
+    }
+
+    30% {
+        background: #180005;
+        filter: contrast(1.8);
+    }
+
+    60% {
+        background: #001408;
+        filter: brightness(1.5);
+    }
+
+    100% {
+        background: #000000;
+        filter: none;
+    }
+}
+
+@media (max-width: 420px) {
+    .screen {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .button-row {
+        grid-template-columns: 1fr;
+    }
+
+    .terminal-text {
+        font-size: 0.89rem;
+        line-height: 1.62;
+    }
+
+    .candy-grid {
+        gap: 5px;
+        padding: 6px;
+    }
+
+    .candy-status {
+        font-size: 0.7rem;
+    }
+
+    button {
+        font-size: 0.86rem;
+    }
+}
