@@ -496,6 +496,18 @@ button:disabled {
     line-height: 1.5;
 }
 
+.birthday-content .youtube-fallback {
+    margin: 18px auto 0;
+    max-width: 560px;
+    font-weight: 700;
+}
+
+.youtube-fallback a {
+    color: #7b3750;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+}
+
 .video-container {
     width: 100%;
     margin-top: 30px;
