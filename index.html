@@ -179,14 +179,20 @@ Vous pouvez maintenant fermer cet onglet.
 
                 <div class="video-container">
                     <video id="birthdayVideo" controls playsinline preload="metadata">
-                        <source src="video/anniversaire.mov" type="video/quicktime">
-                        <source src="video/anniversaire.mp4" type="video/mp4">
+                        <source src="video/anniversaire-part1.mp4" type="video/mp4">
+                        Ton navigateur ne peut pas lire cette vidéo.
+                    </video>
+                </div>
+                <button id="secondVideoButton" class="second-video-button" type="button">&gt; OUVRIR LA DEUXIÈME VIDEO</button>
+                <div id="secondVideoContainer" class="video-container second-video-container hidden">
+                    <video id="secondBirthdayVideo" controls playsinline preload="metadata">
+                        <source src="video/anniversaire-part2.mp4" type="video/mp4">
                         Ton navigateur ne peut pas lire cette vidéo.
                     </video>
                 </div>
                 <p id="videoFallback" class="video-fallback hidden">
                     La lecture automatique a été bloquée.
-                    <a href="video/anniversaire.mov">Ouvrir la vidéo</a>
+                    <a href="video/anniversaire-part1.mp4">Ouvrir la vidéo</a>
                 </p>
             </div>
         </section>

@@ -4,8 +4,8 @@
     Personnalisation:
     - Remplace FRIEND_NAME par son prénom.
     - Remplace SECRET_CODE par le vrai code secret de 13 chiffres.
-    - Place la vidéo finale dans video/anniversaire.mov.
-    - Garde video/anniversaire.mp4 comme secours pour les navigateurs qui refusent le MOV.
+    - Place la première vidéo dans video/anniversaire-part1.mp4.
+    - Place la deuxième vidéo dans video/anniversaire-part2.mp4.
 */
 
 const FRIEND_NAME = "Zoé Are";
@@ -24,6 +24,9 @@ const codeScreen = document.getElementById("codeScreen");
 const finalLoadingScreen = document.getElementById("finalLoadingScreen");
 const videoScreen = document.getElementById("videoScreen");
 const birthdayVideo = document.getElementById("birthdayVideo");
+const secondBirthdayVideo = document.getElementById("secondBirthdayVideo");
+const secondVideoButton = document.getElementById("secondVideoButton");
+const secondVideoContainer = document.getElementById("secondVideoContainer");
 const videoFallback = document.getElementById("videoFallback");
 
 function showScreen(screen) {
@@ -896,8 +899,13 @@ function showBirthdayVideo() {
         document.body.classList.add("birthday-mode");
         showScreen(videoScreen);
         videoFallback.classList.add("hidden");
+        secondVideoContainer.classList.add("hidden");
+        secondVideoButton.classList.remove("hidden");
         birthdayVideo.currentTime = 0;
+        secondBirthdayVideo.pause();
+        secondBirthdayVideo.currentTime = 0;
         birthdayVideo.load();
+        secondBirthdayVideo.load();
 
         const playPromise = birthdayVideo.play();
 
@@ -911,6 +919,13 @@ function showBirthdayVideo() {
 
 birthdayVideo.addEventListener("error", () => {
     videoFallback.classList.remove("hidden");
+});
+
+secondVideoButton.addEventListener("click", () => {
+    secondVideoContainer.classList.remove("hidden");
+    secondVideoButton.classList.add("hidden");
+    secondBirthdayVideo.currentTime = 0;
+    secondBirthdayVideo.play();
 });
 
 showScreen(introScreen);
